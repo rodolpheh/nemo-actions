@@ -1,0 +1,17 @@
+[Nemo Action]
+Name=Compress multiple PDF
+Name[fr]=Compresser les PDF
+Comment=Compress multiple PDF
+Comment[fr]=Compresse des PDF
+
+Exec=bash -c "QUALITY=$(zenity --list --text=\"Choose a quality for the compression\" --column=\"\" --column=\"dPDFSETTINGS\" --hide-column=2 --column=\"Quality\" --radiolist \False screen \"Very low quality (72 dpi)\" False ebook \"Low quality (150 dpi)\" False printer \"High quality (300 dpi)\" False prepress \"Very high quality (300 dpi and +)\"); if [[ $? -eq 1 ]]; then exit 1; fi; for i in %F; do notify-send \"Compressing PDF...\" \"${i}\"; gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -dPDFSETTINGS=/${QUALITY} -sOutputFile=\"${i%.*}_compressed.pdf\" \"${i}\"; done;"
+
+Icon-Name=pdf
+
+Selection=notnone
+
+Extensions=pdf;
+Mimetypes=application/pdf;
+Dependencies=gs;zenity;
+Quote=single
+#EscapeSpaces=true
